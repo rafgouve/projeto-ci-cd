@@ -26,23 +26,22 @@ jobs:
       - name: Simulate Deployment
         run: echo "Deploying application to production... (simulated)"
 
-      # Este é o último step do seu job atual...
-      # Agora adicione os novos steps de notificação abaixo dele
 
       - name: 'Enviar notificação para o Discord (Sucesso)'
-        if: success() # Só roda se os steps anteriores tiverem sucesso
+        if: success() 
         uses: rjstone/discord-webhook-notify@v1
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
           title: "✅ CI/CD Concluído com Sucesso"
           description: "Workflow no repositório ${{ github.repository }} finalizado. O commit [${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) foi processado."
-          color: 3066993 # Cor verde
+          color: 3066993 
 
       - name: 'Enviar notificação para o Discord (Falha)'
-        if: failure() # Só roda se algum step anterior falhar
+        if: failure()
         uses: rjstone/discord-webhook-notify@v1
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
           title: "❌ Falha no CI/CD"
           description: "O workflow no repositório ${{ github.repository }} falhou. Verifique o commit [${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}). [Clique aqui para ver os logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})."
-          color: 15158332 # Cor vermelha
+          color: 15158332
+
